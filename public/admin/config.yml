@@ -1,37 +1,16 @@
 backend:
   name: git-gateway
-  branch: master  # GitHubのデフォルトブランチ名
+  branch: master
 
-publish_mode: editorial_workflow
-
-# メディアファイルの保存場所を修正
-media_folder: "images/uploads"         # 保存先
-public_folder: "/images/uploads"       # 公開時のパス
+media_folder: "uploads"
+public_folder: "/uploads"
 
 collections:
   - name: "news"
     label: "ニュース"
-    folder: "content/news"             # Git管理しやすい場所へ変更
+    folder: "content/news"
     create: true
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    slug: "{{slug}}"
     fields:
       - { label: "タイトル", name: "title", widget: "string" }
-      - { label: "公開日", name: "date", widget: "datetime", format: "YYYY-MM-DD" }
-      - { label: "サムネイル画像", name: "thumbnail", widget: "image", required: false }
-      - { label: "概要", name: "description", widget: "text" }
       - { label: "本文", name: "body", widget: "markdown" }
-      - { label: "カテゴリー", name: "category", widget: "select", options: ["お知らせ", "プレスリリース", "技術情報", "採用情報"] }
-      - { label: "タグ", name: "tags", widget: "list", required: false }
-
-  - name: "settings"
-    label: "設定"
-    files:
-      - name: "general"
-        label: "サイト全般設定"
-        file: "content/site-settings.json"  # content配下に変更
-        fields:
-          - { label: "サイト名", name: "site_title", widget: "string" }
-          - { label: "サイトの説明", name: "site_description", widget: "text" }
-          - { label: "会社住所", name: "company_address", widget: "string" }
-          - { label: "電話番号", name: "phone_number", widget: "string" }
-          - { label: "メールアドレス", name: "email", widget: "string" }
