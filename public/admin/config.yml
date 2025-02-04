@@ -1,0 +1,36 @@
+backend:
+  name: git-gateway
+  branch: main  # GitHubのデフォルトブランチ名
+
+# Netlify Identityを使用
+publish_mode: editorial_workflow
+media_folder: "public/images/uploads"  # メディアファイルの保存場所
+public_folder: "/images/uploads"      # 公開時のパス
+
+collections:
+  - name: "news"
+    label: "ニュース"
+    folder: "public/news"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - {label: "タイトル", name: "title", widget: "string"}
+      - {label: "公開日", name: "date", widget: "datetime", format: "YYYY-MM-DD"}
+      - {label: "サムネイル画像", name: "thumbnail", widget: "image", required: false}
+      - {label: "概要", name: "description", widget: "text"}
+      - {label: "本文", name: "body", widget: "markdown"}
+      - {label: "カテゴリー", name: "category", widget: "select", options: ["お知らせ", "プレスリリース", "技術情報", "採用情報"]}
+      - {label: "タグ", name: "tags", widget: "list", required: false}
+
+  - name: "settings"
+    label: "設定"
+    files:
+      - name: "general"
+        label: "サイト全般設定"
+        file: "public/site-settings.json"
+        fields:
+          - {label: "サイト名", name: "site_title", widget: "string"}
+          - {label: "サイトの説明", name: "site_description", widget: "text"}
+          - {label: "会社住所", name: "company_address", widget: "string"}
+          - {label: "電話番号", name: "phone_number", widget: "string"}
+          - {label: "メールアドレス", name: "email", widget: "string"}

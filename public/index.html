@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tech Solutions | 革新的なテクノロジーソリューション</title>
+    <!-- Netlify Identity Widget -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
@@ -105,46 +107,8 @@
         <section id="news" class="py-5 bg-light">
             <div class="container">
                 <h2 class="text-center display-5 mb-5" data-aos="fade-up">最新ニュース</h2>
-                <div class="row g-4">
-                    <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
-                        <div class="news-card">
-                            <div class="card-image-wrapper">
-                                <img src="https://source.unsplash.com/featured/?deeplearning,future" alt="AIサービス" class="card-img-top">
-                            </div>
-                            <div class="card-body">
-                                <div class="news-date">2025.02.04</div>
-                                <h3 class="h5">新しいAIサービスをリリース</h3>
-                                <p>最新のディープラーニング技術を活用した画像認識サービスの提供を開始しました。</p>
-                                <a href="news/ai-service.html" class="btn btn-link">続きを読む →</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
-                        <div class="news-card">
-                            <div class="card-image-wrapper">
-                                <img src="https://source.unsplash.com/featured/?conference,technology" alt="テクノロジーカンファレンス" class="card-img-top">
-                            </div>
-                            <div class="card-body">
-                                <div class="news-date">2025.02.03</div>
-                                <h3 class="h5">テクノロジーカンファレンスで講演</h3>
-                                <p>最新のWeb開発トレンドについて、当社エンジニアが基調講演を行いました。</p>
-                                <a href="news/tech-conference.html" class="btn btn-link">続きを読む →</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4" data-aos="fade-up" data-aos-delay="300">
-                        <div class="news-card">
-                            <div class="card-image-wrapper">
-                                <img src="https://source.unsplash.com/featured/?office,developer" alt="採用情報" class="card-img-top">
-                            </div>
-                            <div class="card-body">
-                                <div class="news-date">2025.02.02</div>
-                                <h3 class="h5">新規プロジェクトメンバー募集</h3>
-                                <p>急成長中の当社で、共に未来を創るエンジニアを募集しています。</p>
-                                <a href="news/recruitment.html" class="btn btn-link">続きを読む →</a>
-                            </div>
-                        </div>
-                    </div>
+                <div class="row g-4" id="news-container">
+                    <!-- ニュース記事はJavaScriptで動的に読み込まれます -->
                 </div>
             </div>
         </section>
@@ -234,5 +198,18 @@
     <!-- AOS JS -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="script.js"></script>
+
+    <!-- Netlify Identity Widget Init -->
+    <script>
+        if (window.netlifyIdentity) {
+            window.netlifyIdentity.on("init", user => {
+                if (!user) {
+                    window.netlifyIdentity.on("login", () => {
+                        document.location.href = "/admin/";
+                    });
+                }
+            });
+        }
+    </script>
 </body>
 </html>

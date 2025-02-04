@@ -1,162 +1,135 @@
-// AOSアニメーション初期化
-AOS.init({
-    duration: 800,
-    easing: 'ease-in-out',
-    once: true,
-    mirror: false
-});
-
+// AOS (Animate On Scroll) の初期化
 document.addEventListener('DOMContentLoaded', () => {
-    // フォームバリデーションの初期化
-    initFormValidation();
-    
-    // ナビゲーションの制御
-    initNavigation();
-});
+    AOS.init({
+        duration: 800,
+        easing: 'ease-in-out',
+        once: true,
+        mirror: false
+    });
 
-// フォームバリデーションの初期化
-function initFormValidation() {
+    // フォームバリデーションの初期化
     const forms = document.querySelectorAll('.needs-validation');
-    
-    forms.forEach(form => {
+    Array.from(forms).forEach(form => {
         form.addEventListener('submit', event => {
             if (!form.checkValidity()) {
                 event.preventDefault();
                 event.stopPropagation();
-            } else {
-                event.preventDefault();
-                handleFormSubmission(form);
             }
             form.classList.add('was-validated');
-        });
+        }, false);
     });
-}
 
-// フォーム送信処理
-function handleFormSubmission(form) {
-    // フォームデータの収集
-    const formData = new FormData(form);
-    const data = {};
-    formData.forEach((value, key) => data[key] = value);
-
-    // 成功メッセージの表示
-    showFormMessage(form, 'お問い合わせありがとうございます。内容を確認の上、担当者よりご連絡させていただきます。', 'success');
-    
-    // フォームのリセット
-    form.reset();
-    form.classList.remove('was-validated');
-}
-
-// フォームメッセージの表示
-function showFormMessage(form, message, type = 'success') {
-    // 既存のメッセージを削除
-    const existingAlert = form.querySelector('.alert');
-    if (existingAlert) {
-        existingAlert.remove();
-    }
-
-    // 新しいメッセージを作成
-    const alertDiv = document.createElement('div');
-    alertDiv.className = `alert alert-${type} alert-dismissible fade show mt-4`;
-    alertDiv.innerHTML = `
-        ${message}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    `;
-
-    // メッセージの挿入
-    form.parentNode.insertBefore(alertDiv, form.nextSibling);
-
-    // 3秒後に自動で消える
-    setTimeout(() => {
-        alertDiv.classList.remove('show');
-        setTimeout(() => alertDiv.remove(), 300);
-    }, 3000);
-}
-
-// ナビゲーションの制御
-function initNavigation() {
-    // スムーズスクロール
-    initSmoothScroll();
-    
-    // アクティブなナビゲーションアイテムの制御
-    initActiveNavigation();
-    
-    // モバイルメニューの自動収納
-    initMobileMenuCollapse();
-}
-
-// スムーズスクロール
-function initSmoothScroll() {
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href');
-            if (targetId === '#') return;
-            
-            const target = document.querySelector(targetId);
-            if (target) {
-                const navHeight = document.querySelector('.navbar').offsetHeight;
-                const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navHeight;
-                
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                });
-            }
-        });
-    });
-}
-
-// アクティブなナビゲーションアイテムの制御
-function initActiveNavigation() {
-    const sections = document.querySelectorAll('section[id]');
-    const navItems = document.querySelectorAll('.navbar-nav .nav-link');
-    
-    window.addEventListener('scroll', () => {
-        const scrollPosition = window.scrollY + window.innerHeight / 2;
-        
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.offsetHeight;
-            
-            if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-                navItems.forEach(navItem => {
-                    navItem.classList.remove('active');
-                    if (navItem.getAttribute('href') === `#${section.id}`) {
-                        navItem.classList.add('active');
-                    }
-                });
-            }
-        });
-    });
-}
-
-// モバイルメニューの自動収納
-function initMobileMenuCollapse() {
-    const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
-    const navbarCollapse = document.querySelector('.navbar-collapse');
-    
-    if (navbarCollapse) {
-        const bsCollapse = new bootstrap.Collapse(navbarCollapse, {
-            toggle: false
-        });
-        
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                if (navbarCollapse.classList.contains('show')) {
-                    bsCollapse.hide();
-                }
-            });
-        });
-    }
-}
-
-// スクロール位置に応じたナビゲーションの背景色変更
-window.addEventListener('scroll', () => {
-    const navbar = document.querySelector('.navbar');
-    if (window.scrollY > 50) {
-        navbar.classList.add('navbar-scrolled');
-    } else {
-        navbar.classList.remove('navbar-scrolled');
-    }
+    // ニュース記事の読み込み
+    loadNews();
 });
+
+// ニュース記事を読み込む関数
+async function loadNews() {
+    const newsContainer = document.getElementById('news-container');
+    if (!newsContainer) return;
+
+    try {
+        const response = await fetch('/admin/config.yml');
+        const config = await response.text();
+        const newsFolder = config.match(/folder: "(.+?)"/)[1];
+        
+        const newsFiles = await fetch(`/${newsFolder}`);
+        const news = await newsFiles.json();
+
+        // 日付で降順ソート
+        news.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+        // 最新の3件のみ表示
+        const recentNews = news.slice(0, 3);
+
+        newsContainer.innerHTML = recentNews.map((item, index) => `
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="${index * 100}">
+                <div class="news-card">
+                    ${item.thumbnail ? `
+                        <div class="card-image-wrapper">
+                            <img src="${item.thumbnail}" alt="${item.title}" class="card-img-top">
+                        </div>
+                    ` : ''}
+                    <div class="card-body">
+                        <div class="news-date">${formatDate(item.date)}</div>
+                        <h3 class="h5">${item.title}</h3>
+                        <p>${item.description || truncateText(item.body, 100)}</p>
+                        <a href="${generateNewsUrl(item)}" class="btn btn-link">続きを読む →</a>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+
+    } catch (error) {
+        console.error('ニュース記事の読み込みに失敗しました:', error);
+        // エラー時は静的なコンテンツを表示
+        displayStaticNews();
+    }
+}
+
+// 日付のフォーマット
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('ja-JP', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+    }).replace(/\//g, '.');
+}
+
+// テキストの truncate
+function truncateText(text, maxLength) {
+    if (!text) return '';
+    return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
+}
+
+// ニュース記事のURL生成
+function generateNewsUrl(item) {
+    return `/news/${item.slug || item.title.toLowerCase().replace(/\s+/g, '-')}.html`;
+}
+
+// 静的なニュースの表示（フォールバック用）
+function displayStaticNews() {
+    const newsContainer = document.getElementById('news-container');
+    if (!newsContainer) return;
+
+    const staticNews = [
+        {
+            title: '新しいAIサービスをリリース',
+            date: '2025.02.04',
+            image: 'https://source.unsplash.com/featured/?deeplearning,future',
+            description: '最新のディープラーニング技術を活用した画像認識サービスの提供を開始しました。',
+            url: 'news/ai-service.html'
+        },
+        {
+            title: 'テクノロジーカンファレンスで講演',
+            date: '2025.02.03',
+            image: 'https://source.unsplash.com/featured/?conference,technology',
+            description: '最新のWeb開発トレンドについて、当社エンジニアが基調講演を行いました。',
+            url: 'news/tech-conference.html'
+        },
+        {
+            title: '新規プロジェクトメンバー募集',
+            date: '2025.02.02',
+            image: 'https://source.unsplash.com/featured/?office,developer',
+            description: '急成長中の当社で、共に未来を創るエンジニアを募集しています。',
+            url: 'news/recruitment.html'
+        }
+    ];
+
+    newsContainer.innerHTML = staticNews.map((item, index) => `
+        <div class="col-lg-4" data-aos="fade-up" data-aos-delay="${index * 100}">
+            <div class="news-card">
+                <div class="card-image-wrapper">
+                    <img src="${item.image}" alt="${item.title}" class="card-img-top">
+                </div>
+                <div class="card-body">
+                    <div class="news-date">${item.date}</div>
+                    <h3 class="h5">${item.title}</h3>
+                    <p>${item.description}</p>
+                    <a href="${item.url}" class="btn btn-link">続きを読む →</a>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
