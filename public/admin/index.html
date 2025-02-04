@@ -1,38 +1,13 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Content Manager | Tech Solutions</title>
-
-  <!-- Netlify Identity Widget -->
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-
-  <!-- Netlify CMS (動作確認済みのバージョン 2.10.154 を使用) -->
-  <script src="https://unpkg.com/netlify-cms@2.10.154/dist/netlify-cms.js"></script>
-</head>
-<body>
-  <h1>Netlify CMS Loading...</h1>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      if (window.netlifyIdentity) {
-        window.netlifyIdentity.on("init", user => {
-          if (!user) {
-            window.netlifyIdentity.on("login", () => {
-              document.location.href = "/admin/";
-            });
-          }
-        });
-      }
-
-      if (window.CMS) {
-        window.CMS.init();
-        console.log("Netlify CMS loaded successfully!");
-      } else {
-        console.error("Netlify CMS failed to load.");
-      }
-    });
-  </script>
-</body>
+  <head>
+    <meta charset="utf-8">
+    <title>Content Manager | Tech Solutions</title>
+    <!-- Netlify Identity Widget (ログイン用) -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <!-- Netlify CMS (動作確認済みバージョン) -->
+    <script src="https://unpkg.com/netlify-cms@2.10.154/dist/netlify-cms.js"></script>
+  </head>
+  <body>
+  </body>
 </html>
