@@ -1,0 +1,202 @@
+/* 採用情報ページ専用スタイル */
+
+/* ヒーローセクション */
+.careers-hero {
+    background: linear-gradient(135deg, rgba(13,110,253,0.9), rgba(13,110,253,0.7)),
+                url('https://source.unsplash.com/featured/?modernoffice,teamwork') no-repeat center center;
+    background-size: cover;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.careers-hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+    background: linear-gradient(transparent, white);
+}
+
+/* 企業文化カード */
+.culture-card {
+    background: white;
+    border-radius: 15px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+    height: 100%;
+}
+
+.culture-card:hover {
+    transform: translateY(-5px);
+}
+
+.culture-card .icon-wrapper {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1.5rem;
+    background: var(--primary-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2rem;
+}
+
+.culture-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--dark-color);
+}
+
+/* 募集職種カード */
+.position-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    height: 100%;
+    transition: transform 0.3s ease;
+}
+
+.position-card:hover {
+    transform: translateY(-5px);
+}
+
+.position-card .card-header {
+    background: var(--primary-color);
+    color: white;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.position-card .card-header i {
+    font-size: 2rem;
+}
+
+.position-card .card-header h3 {
+    margin: 0;
+    font-size: 1.25rem;
+}
+
+.position-card .card-body {
+    padding: 1.5rem;
+}
+
+.position-card .card-body h4 {
+    font-size: 1.1rem;
+    color: var(--dark-color);
+    margin-bottom: 1rem;
+}
+
+.position-card .card-body ul {
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+}
+
+.position-card .card-body li {
+    margin-bottom: 0.5rem;
+    color: var(--secondary-color);
+}
+
+/* 福利厚生カード */
+.benefit-card {
+    background: white;
+    border-radius: 15px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    height: 100%;
+    transition: transform 0.3s ease;
+    background-position: center;
+    background-size: cover;
+    position: relative;
+    overflow: hidden;
+}
+
+.benefit-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.95);
+    z-index: 1;
+}
+
+.benefit-card > * {
+    position: relative;
+    z-index: 2;
+}
+
+.benefit-card:nth-child(1) {
+    background-image: url('https://source.unsplash.com/featured/?workspace,modern');
+}
+
+.benefit-card:nth-child(2) {
+    background-image: url('https://source.unsplash.com/featured/?learning,books');
+}
+
+.benefit-card:nth-child(3) {
+    background-image: url('https://source.unsplash.com/featured/?remote,work');
+}
+
+.benefit-card:nth-child(4) {
+    background-image: url('https://source.unsplash.com/featured/?lifestyle,balance');
+}
+
+.benefit-card:hover {
+    transform: translateY(-5px);
+}
+
+.benefit-card i {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.benefit-card h4 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    color: var(--dark-color);
+}
+
+.benefit-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+}
+
+.benefit-card li {
+    margin-bottom: 0.5rem;
+    padding-left: 1.5rem;
+    position: relative;
+    color: var(--secondary-color);
+}
+
+.benefit-card li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--primary-color);
+}
+
+/* エントリーフォーム */
+.entry-form {
+    background: white;
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+/* その他のスタイルは変更なしなので省略 */
