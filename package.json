@@ -1,0 +1,12 @@
+{
+  "name": "tech-solutions-website",
+  "version": "1.0.0",
+  "description": "Tech Solutions corporate website with Netlify CMS",
+  "scripts": {
+    "generate-news": "node public/scripts/generate-news-index.js",
+    "build": "npm run generate-news"
+  },
+  "dependencies": {
+    "gray-matter": "^4.0.3"
+  }
+}

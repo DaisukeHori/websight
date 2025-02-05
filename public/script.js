@@ -29,36 +29,15 @@ async function loadNews() {
     if (!newsContainer) return;
 
     try {
-        // content/news ディレクトリのマークダウンファイル一覧を取得
-        const response = await fetch('/.netlify/git/github/contents/content/news');
-        const files = await response.json();
-        const newsPromises = files
-            .filter(file => file.name.endsWith('.md'))
-            .map(file => fetch(file.download_url).then(res => res.text()));
-
-        const newsTexts = await Promise.all(newsPromises);
-        const news = newsTexts.map(text => {
-            // Front matterのパース
-            const frontMatter = text.split('---')[1];
-            const data = {};
-            frontMatter.split('\n').forEach(line => {
-                const [key, ...value] = line.split(':');
-                if (key && value.length > 0) {
-                    data[key.trim()] = value.join(':').trim();
-                }
-            });
-            // 本文の取得
-            const body = text.split('---')[2];
-            return {
-                ...data,
-                body: body.trim(),
-                date: new Date(data.date),
-                slug: data.title.toLowerCase().replace(/\s+/g, '-')
-            };
-        });
+        // news-index.jsonからニュース一覧を読み込む
+        const response = await fetch('/content/news-index.json');
+        if (!response.ok) {
+            throw new Error('ニュース記事の読み込みに失敗しました');
+        }
+        const news = await response.json();
 
         // 日付で降順ソート
-        news.sort((a, b) => b.date - a.date);
+        news.sort((a, b) => new Date(b.date) - new Date(a.date));
 
         // 最新の3件のみ表示
         const recentNews = news.slice(0, 3);
@@ -115,21 +94,21 @@ function displayStaticNews() {
             date: '2025.02.04',
             image: 'https://source.unsplash.com/featured/?deeplearning,future',
             description: '最新のディープラーニング技術を活用した画像認識サービスの提供を開始しました。',
-            url: '/content/news/2025-02-04-ai-service.html'
+            slug: '2025-02-04-ai-service'
         },
         {
             title: 'テクノロジーカンファレンスで講演',
             date: '2025.02.03',
             image: 'https://source.unsplash.com/featured/?conference,technology',
             description: '最新のWeb開発トレンドについて、当社エンジニアが基調講演を行いました。',
-            url: '/content/news/2025-02-03-tech-conference.html'
+            slug: '2025-02-03-tech-conference'
         },
         {
             title: '新規プロジェクトメンバー募集',
             date: '2025.02.02',
             image: 'https://source.unsplash.com/featured/?office,developer',
             description: '急成長中の当社で、共に未来を創るエンジニアを募集しています。',
-            url: '/content/news/2025-02-02-recruitment.html'
+            slug: '2025-02-02-recruitment'
         }
     ];
 
@@ -143,7 +122,7 @@ function displayStaticNews() {
                     <div class="news-date">${item.date}</div>
                     <h3 class="h5">${item.title}</h3>
                     <p>${item.description}</p>
-                    <a href="${item.url}" class="btn btn-link">続きを読む →</a>
+                    <a href="/content/news/${item.slug}.html" class="btn btn-link">続きを読む →</a>
                 </div>
             </div>
         </div>

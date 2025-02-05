@@ -1,6 +1,6 @@
 [build]
   publish = "public"
-  command = "# no build command"
+  command = "npm run build"
 
 [[redirects]]
   from = "/*"
@@ -12,14 +12,7 @@
   [headers.values]
     X-Frame-Options = "DENY"
     X-XSS-Protection = "1; mode=block"
-    Content-Security-Policy = "default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://identity.netlify.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://unpkg.com; img-src 'self' data: https:; frame-src https://identity.netlify.com; connect-src 'self' https://api.netlify.com https://identity.netlify.com https://api.github.com"
-
-[[headers]]
-  for = "/.netlify/git/*"
-  [headers.values]
-    Access-Control-Allow-Origin = "*"
-    Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
-    Access-Control-Allow-Headers = "Content-Type, Authorization"
+    Content-Security-Policy = "default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://identity.netlify.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://unpkg.com; img-src 'self' data: https:; frame-src https://identity.netlify.com; connect-src 'self' https://api.netlify.com https://identity.netlify.com"
 
 [[headers]]
   for = "/*"
