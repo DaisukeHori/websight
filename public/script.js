@@ -32,9 +32,18 @@ async function loadNews() {
         // news-index.jsonからニュース一覧を読み込む
         const response = await fetch('/content/news-index.json');
         if (!response.ok) {
-            throw new Error('ニュース記事の読み込みに失敗しました');
+            throw new Error(`HTTPエラー: ${response.status}`);
         }
-        const news = await response.json();
+
+        const text = await response.text(); // レスポンスを一旦テキストとして取得
+        let news;
+        try {
+            news = JSON.parse(text); // JSONとしてパース
+        } catch (e) {
+            console.error('JSONパースエラー:', e);
+            console.error('受信したテキスト:', text);
+            throw new Error('JSONパースに失敗しました');
+        }
 
         // 日付で降順ソート
         news.sort((a, b) => new Date(b.date) - new Date(a.date));
@@ -54,7 +63,11 @@ async function loadNews() {
                         <div class="news-date">${formatDate(item.date)}</div>
                         <h3 class="h5">${item.title}</h3>
                         <p>${item.description || truncateText(item.body, 100)}</p>
-                        <a href="/content/news/${item.slug}.html" class="btn btn-link">続きを読む →</a>
+                        <div class="news-meta">
+                            ${item.category ? `<span class="badge bg-primary">${item.category}</span>` : ''}
+                            ${item.tags ? item.tags.map(tag => `<span class="badge bg-secondary ms-1">${tag}</span>`).join('') : ''}
+                        </div>
+                        <a href="/content/news/${item.slug}.html" class="btn btn-link mt-2">続きを読む →</a>
                     </div>
                 </div>
             </div>
@@ -94,6 +107,8 @@ function displayStaticNews() {
             date: '2025.02.04',
             image: 'https://source.unsplash.com/featured/?deeplearning,future',
             description: '最新のディープラーニング技術を活用した画像認識サービスの提供を開始しました。',
+            category: 'プレスリリース',
+            tags: ['AI', '新サービス'],
             slug: '2025-02-04-ai-service'
         },
         {
@@ -101,6 +116,8 @@ function displayStaticNews() {
             date: '2025.02.03',
             image: 'https://source.unsplash.com/featured/?conference,technology',
             description: '最新のWeb開発トレンドについて、当社エンジニアが基調講演を行いました。',
+            category: 'お知らせ',
+            tags: ['イベント', '講演'],
             slug: '2025-02-03-tech-conference'
         },
         {
@@ -108,6 +125,8 @@ function displayStaticNews() {
             date: '2025.02.02',
             image: 'https://source.unsplash.com/featured/?office,developer',
             description: '急成長中の当社で、共に未来を創るエンジニアを募集しています。',
+            category: '採用情報',
+            tags: ['採用', 'エンジニア'],
             slug: '2025-02-02-recruitment'
         }
     ];
@@ -122,7 +141,11 @@ function displayStaticNews() {
                     <div class="news-date">${item.date}</div>
                     <h3 class="h5">${item.title}</h3>
                     <p>${item.description}</p>
-                    <a href="/content/news/${item.slug}.html" class="btn btn-link">続きを読む →</a>
+                    <div class="news-meta">
+                        ${item.category ? `<span class="badge bg-primary">${item.category}</span>` : ''}
+                        ${item.tags ? item.tags.map(tag => `<span class="badge bg-secondary ms-1">${tag}</span>`).join('') : ''}
+                    </div>
+                    <a href="/content/news/${item.slug}.html" class="btn btn-link mt-2">続きを読む →</a>
                 </div>
             </div>
         </div>
