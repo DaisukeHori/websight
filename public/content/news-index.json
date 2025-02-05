@@ -1,29 +1,15 @@
 [
   {
     "title": "新しいAIサービスをリリース",
-    "date": "2025-02-04",
+    "date": "2025-02-04T00:00:00.000Z",
     "description": "最新のディープラーニング技術を活用した画像認識サービスの提供を開始しました。",
     "thumbnail": "https://source.unsplash.com/featured/?deeplearning,future",
     "category": "プレスリリース",
+    "tags": [
+      "AI",
+      "新サービス"
+    ],
     "slug": "2025-02-04-ai-service",
-    "tags": ["AI", "新サービス"]
-  },
-  {
-    "title": "テクノロジーカンファレンスで講演",
-    "date": "2025-02-03",
-    "description": "最新のWeb開発トレンドについて、当社エンジニアが基調講演を行いました。",
-    "thumbnail": "https://source.unsplash.com/featured/?conference,technology",
-    "category": "お知らせ",
-    "slug": "2025-02-03-tech-conference",
-    "tags": ["イベント", "講演"]
-  },
-  {
-    "title": "新規プロジェクトメンバー募集",
-    "date": "2025-02-02",
-    "description": "急成長中の当社で、共に未来を創るエンジニアを募集しています。",
-    "thumbnail": "https://source.unsplash.com/featured/?office,developer",
-    "category": "採用情報",
-    "slug": "2025-02-02-recruitment",
-    "tags": ["採用", "エンジニア"]
+    "body": "\n# 新しいAIサービスをリリース\n\nTech Solutionsは、最新のディープラーニング技術を活用した画像認識サービス「AI Vision Pro」の提供を開始しました。\n\n## サービスの特徴\n\n- 高精度な物体検出\n- リアルタイム処理対応\n- クラウドベースの柔軟なスケーリング\n- APIによる簡単な導入\n\n## 導入のメリット\n\n1. 業務効率の大幅な改善\n2. 人的ミスの削減\n3."
   }
 ]
