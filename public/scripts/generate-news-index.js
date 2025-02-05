@@ -3,7 +3,7 @@ const path = require('path');
 const matter = require('gray-matter');
 
 // ニュース記事のディレクトリ（CMSコンテンツ）
-const newsDir = path.join(__dirname, '../../content/news');
+const newsDir = path.join(__dirname, '../content/news');
 // 出力するJSONファイルのパス
 const outputPath = path.join(__dirname, '../content/news-index.json');
 
@@ -17,8 +17,9 @@ function generateNewsIndex() {
     try {
         // ディレクトリが存在しない場合は空の配列を返す
         if (!fs.existsSync(newsDir)) {
+            fs.mkdirSync(newsDir, { recursive: true });
             fs.writeFileSync(outputPath, '[]');
-            console.log('News directory not found. Created empty index.');
+            console.log('News directory created. Created empty index.');
             return;
         }
 

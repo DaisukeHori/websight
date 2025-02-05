@@ -5,13 +5,13 @@ backend:
 publish_mode: editorial_workflow
 
 # メディアファイルの保存場所
-media_folder: "static/images/uploads"
+media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
 
 collections:
   - name: "news"
     label: "ニュース"
-    folder: "content/news"
+    folder: "public/content/news"
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
