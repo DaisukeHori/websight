@@ -2,6 +2,38 @@
   publish = "public"
   command = "npm run build"
 
+[build.processing]
+  skip_processing = false
+
+[build.processing.html]
+  pretty_urls = true
+
+[build.processing.css]
+  bundle = true
+  minify = true
+
+[build.processing.js]
+  bundle = true
+  minify = true
+
+[build.processing.images]
+  compress = true
+
+[[redirects]]
+  from = "/content/*"
+  to = "/content/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/services/*"
+  to = "/services/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/news/*"
+  to = "/news/:splat"
+  status = 200
+
 [[redirects]]
   from = "/*"
   to = "/index.html"

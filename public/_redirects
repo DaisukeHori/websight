@@ -1,2 +1,11 @@
+# コンテンツファイルへのアクセスを許可
 /content/*  /content/:splat  200
+
+# サービス詳細ページへのアクセスを許可
+/services/*  /services/:splat  200
+
+# ニュース詳細ページへのアクセスを許可
+/news/*  /news/:splat  200
+
+# その他のページはindex.htmlにフォールバック
 /*  /index.html  200
