@@ -1,13 +1,26 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ja">
-  <head>
-    <meta charset="utf-8">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Content Manager | Tech Solutions</title>
-    <!-- Netlify Identity Widget (ログイン用) -->
+</head>
+<body>
+    <!-- Netlify Identity Widget を先に読み込み -->
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-    <!-- Netlify CMS (安定版) -->
-    <script src="https://unpkg.com/netlify-cms@2.10.154/dist/netlify-cms.js"></script>
-  </head>
-  <body>
-  </body>
+    <!-- 最新のNetlify CMS -->
+    <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js" type="text/javascript"></script>
+
+    <script>
+        if (window.netlifyIdentity) {
+            window.netlifyIdentity.on("init", user => {
+                if (!user) {
+                    window.netlifyIdentity.on("login", () => {
+                        document.location.href = "/admin/";
+                    });
+                }
+            });
+        }
+    </script>
+</body>
 </html>
