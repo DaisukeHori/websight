@@ -40,7 +40,7 @@
   [headers.values]
     X-Frame-Options = "DENY"
     X-XSS-Protection = "1; mode=block"
-    Content-Security-Policy = "default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://identity.netlify.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://unpkg.com; img-src 'self' data: https:; frame-src https://identity.netlify.com; connect-src 'self' https://api.netlify.com https://identity.netlify.com"
+    Content-Security-Policy = "default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://identity.netlify.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://unpkg.com; img-src 'self' data: blob: https:; media-src 'self' blob: https:; frame-src https://identity.netlify.com; connect-src 'self' blob: https://api.netlify.com https://identity.netlify.com"
 
 [[headers]]
   for = "/*.css"
