@@ -29,11 +29,8 @@ async function loadNews() {
     if (!newsContainer) return;
 
     try {
-        const response = await fetch('/admin/config.yml');
-        const config = await response.text();
-        const newsFolder = config.match(/folder: "(.+?)"/)[1];
-        
-        const newsFiles = await fetch(`/${newsFolder}`);
+        // content/newsディレクトリから記事を読み込む
+        const newsFiles = await fetch('/content/news/index.json');
         const news = await newsFiles.json();
 
         // 日付で降順ソート
@@ -54,7 +51,7 @@ async function loadNews() {
                         <div class="news-date">${formatDate(item.date)}</div>
                         <h3 class="h5">${item.title}</h3>
                         <p>${item.description || truncateText(item.body, 100)}</p>
-                        <a href="${generateNewsUrl(item)}" class="btn btn-link">続きを読む →</a>
+                        <a href="/content/news/${item.slug}.html" class="btn btn-link">続きを読む →</a>
                     </div>
                 </div>
             </div>
@@ -83,11 +80,6 @@ function truncateText(text, maxLength) {
     return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
 }
 
-// ニュース記事のURL生成
-function generateNewsUrl(item) {
-    return `/news/${item.slug || item.title.toLowerCase().replace(/\s+/g, '-')}.html`;
-}
-
 // 静的なニュースの表示（フォールバック用）
 function displayStaticNews() {
     const newsContainer = document.getElementById('news-container');
@@ -99,21 +91,21 @@ function displayStaticNews() {
             date: '2025.02.04',
             image: 'https://source.unsplash.com/featured/?deeplearning,future',
             description: '最新のディープラーニング技術を活用した画像認識サービスの提供を開始しました。',
-            url: 'news/ai-service.html'
+            url: '/content/news/2025-02-04-ai-service.html'
         },
         {
             title: 'テクノロジーカンファレンスで講演',
             date: '2025.02.03',
             image: 'https://source.unsplash.com/featured/?conference,technology',
             description: '最新のWeb開発トレンドについて、当社エンジニアが基調講演を行いました。',
-            url: 'news/tech-conference.html'
+            url: '/content/news/2025-02-03-tech-conference.html'
         },
         {
             title: '新規プロジェクトメンバー募集',
             date: '2025.02.02',
             image: 'https://source.unsplash.com/featured/?office,developer',
             description: '急成長中の当社で、共に未来を創るエンジニアを募集しています。',
-            url: 'news/recruitment.html'
+            url: '/content/news/2025-02-02-recruitment.html'
         }
     ];
 
