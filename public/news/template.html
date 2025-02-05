@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}} | Tech Solutions</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="bi bi-code-square"></i> Tech Solutions
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/#home"><i class="bi bi-house-door"></i> ホーム</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/#services"><i class="bi bi-gear"></i> サービス</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/#news"><i class="bi bi-newspaper"></i> ニュース</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/careers/index.html"><i class="bi bi-person-plus"></i> 採用情報</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/#contact"><i class="bi bi-envelope"></i> お問い合わせ</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <article class="news-detail">
+            <div class="container">
+                <header class="news-detail-header">
+                    <h1 class="news-detail-title">{{title}}</h1>
+                    <div class="news-detail-meta">
+                        <span class="date"><i class="bi bi-calendar"></i> {{date}}</span>
+                        {{#if category}}
+                        <span class="badge bg-primary">{{category}}</span>
+                        {{/if}}
+                        {{#each tags}}
+                        <span class="badge bg-secondary">{{this}}</span>
+                        {{/each}}
+                    </div>
+                    {{#if thumbnail}}
+                    <img src="{{thumbnail}}" alt="{{title}}" class="news-detail-image">
+                    {{/if}}
+                </header>
+
+                <div class="news-detail-content">
+                    {{{content}}}
+                </div>
+
+                {{#if gallery}}
+                <div class="news-gallery">
+                    <h2>ギャラリー</h2>
+                    <div class="row">
+                        {{#each gallery}}
+                        <div class="col-md-4 gallery-item">
+                            <img src="{{image}}" alt="{{caption}}" class="gallery-image">
+                            <p class="gallery-caption">{{caption}}</p>
+                        </div>
+                        {{/each}}
+                    </div>
+                </div>
+                {{/if}}
+
+                {{#if links}}
+                <div class="news-links">
+                    <h3>関連リンク</h3>
+                    <ul>
+                        {{#each links}}
+                        <li><a href="{{url}}" target="_blank">{{title}} <i class="bi bi-box-arrow-up-right"></i></a></li>
+                        {{/each}}
+                    </ul>
+                </div>
+                {{/if}}
+
+                {{#if author}}
+                <div class="news-author">
+                    <p><i class="bi bi-person"></i> 著者: {{author}}</p>
+                </div>
+                {{/if}}
+
+                <div class="text-center mt-5">
+                    <a href="/#news" class="btn btn-outline-primary">
+                        <i class="bi bi-arrow-left"></i> ニュース一覧に戻る
+                    </a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="bg-dark text-light py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h4><i class="bi bi-code-square"></i> Tech Solutions</h4>
+                    <p>革新的なテクノロジーソリューションを提供し、ビジネスの成長をサポートします。</p>
+                </div>
+                <div class="col-md-4">
+                    <h4>リンク</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/#home" class="text-light">ホーム</a></li>
+                        <li><a href="/#services" class="text-light">サービス</a></li>
+                        <li><a href="/#news" class="text-light">ニュース</a></li>
+                        <li><a href="/#contact" class="text-light">お問い合わせ</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h4>お問い合わせ</h4>
+                    <ul class="list-unstyled">
+                        <li><i class="bi bi-geo-alt"></i> 〒100-0001 東京都千代田区1-1-1</li>
+                        <li><i class="bi bi-telephone"></i> 03-1234-5678</li>
+                        <li><i class="bi bi-envelope"></i> info@techsolutions.jp</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center">
+                <p class="mb-0">&copy; 2025 Tech Solutions. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

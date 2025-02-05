@@ -1,20 +1,53 @@
 const fs = require('fs');
 const path = require('path');
 const matter = require('gray-matter');
+const Handlebars = require('handlebars');
 
-// ニュース記事のディレクトリ（CMSコンテンツ）
+// ニュース記事のディレクトリ(CMSコンテンツ)
 const newsDir = path.join(__dirname, '../content/news');
 // 出力するJSONファイルのパス
 const outputPath = path.join(__dirname, '../content/news-index.json');
+// テンプレートファイルのパス
+const templatePath = path.join(__dirname, '../news/template.html');
 
 // ディレクトリが存在しない場合は作成
 if (!fs.existsSync(path.dirname(outputPath))) {
     fs.mkdirSync(path.dirname(outputPath), { recursive: true });
 }
 
-// Markdownファイルを読み込んでJSONを生成する
+// 日付のフォーマット
+function formatDate(date) {
+    return new Date(date).toLocaleDateString('ja-JP', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+    }).replace(/\//g, '.');
+}
+
+// Markdownをパースしてニュース記事を生成する
+function generateNewsArticle(content, data, template, slug) {
+    const articleData = {
+        ...data,
+        content: content,
+        date: formatDate(data.date)
+    };
+
+    const html = template(articleData);
+    const outputDir = path.join(__dirname, '../news');
+    if (!fs.existsSync(outputDir)) {
+        fs.mkdirSync(outputDir, { recursive: true });
+    }
+
+    fs.writeFileSync(path.join(outputDir, `${slug}.html`), html);
+}
+
+// Markdownファイルを読み込んでJSONとHTMLを生成する
 function generateNewsIndex() {
     try {
+        // テンプレートの読み込み
+        const templateContent = fs.readFileSync(templatePath, 'utf8');
+        const template = Handlebars.compile(templateContent);
+
         // ディレクトリが存在しない場合は空の配列を返す
         if (!fs.existsSync(newsDir)) {
             fs.mkdirSync(newsDir, { recursive: true });
@@ -41,6 +74,9 @@ function generateNewsIndex() {
             // slugがない場合はファイル名から生成
             const slug = data.slug || path.basename(file, '.md');
             
+            // HTML記事を生成
+            generateNewsArticle(content, data, template, slug);
+
             return {
                 title: data.title,
                 date: data.date,
@@ -49,7 +85,10 @@ function generateNewsIndex() {
                 category: data.category,
                 tags: data.tags || [],
                 slug: slug,
-                body: content
+                gallery: data.gallery || [],
+                links: data.links || [],
+                author: data.author,
+                featured: data.featured || false
             };
         });
 

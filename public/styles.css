@@ -30,6 +30,11 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.news-card:hover .card-image-wrapper img {
+    transform: scale(1.05);
 }
 
 .news-date {
@@ -44,6 +49,8 @@
 
 .news-meta .badge {
     font-size: 0.8rem;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
 }
 
 .contact-card {
@@ -53,10 +60,85 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* ネガティブマージンでカードを上に */
-.service-card, .news-card {
-    margin-top: -50px;
-    background: #fff;
+/* ニュース詳細ページのスタイル */
+.news-detail {
+    padding: 4rem 0;
+}
+
+.news-detail-header {
+    margin-bottom: 3rem;
+}
+
+.news-detail-title {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.news-detail-meta {
+    color: #666;
+    margin-bottom: 2rem;
+}
+
+.news-detail-meta .badge {
+    margin-left: 1rem;
+}
+
+.news-detail-image {
+    width: 100%;
+    max-height: 500px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+}
+
+.news-detail-content {
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+
+.news-gallery {
+    margin: 3rem 0;
+}
+
+.gallery-item {
+    margin-bottom: 2rem;
+}
+
+.gallery-image {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
+.gallery-caption {
+    color: #666;
+    font-style: italic;
+}
+
+.news-links {
+    margin: 3rem 0;
+    padding: 2rem;
+    background: #f8f9fa;
+    border-radius: 10px;
+}
+
+.news-links h3 {
+    margin-bottom: 1.5rem;
+}
+
+.news-links ul {
+    list-style: none;
+    padding: 0;
+}
+
+.news-links li {
+    margin-bottom: 1rem;
+}
+
+.news-author {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid #dee2e6;
 }
 
 /* モバイル対応 */
@@ -65,84 +147,11 @@
         height: 60vh;
     }
     
-    .service-card, .news-card {
-        margin-top: 0;
+    .news-detail-title {
+        font-size: 2rem;
     }
-}
-
-/* アニメーション */
-[data-aos] {
-    pointer-events: none;
-}
-[data-aos].aos-animate {
-    pointer-events: auto;
-}
-
-/* ニュースセクションの追加スタイル */
-#news .news-card {
-    display: flex;
-    flex-direction: column;
-}
-
-#news .card-body {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-#news .btn-link {
-    margin-top: auto;
-    align-self: start;
-}
-
-#news .news-meta {
-    margin: 1rem 0;
-}
-
-#news .news-meta .badge {
-    display: inline-block;
-    margin-right: 0.5rem;
-    margin-bottom: 0.5rem;
-}
-
-#news .card-image-wrapper {
-    position: relative;
-    padding-top: 56.25%;
-    background-color: #f8f9fa;
-}
-
-#news .card-image-wrapper img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-}
-
-#news .news-card:hover .card-image-wrapper img {
-    transform: scale(1.05);
-}
-
-/* フォントサイズの調整 */
-#news h3.h5 {
-    font-size: 1.25rem;
-    margin: 1rem 0;
-    line-height: 1.4;
-}
-
-#news p {
-    color: #666;
-    line-height: 1.6;
-}
-
-/* アニメーション用のトランジション */
-.news-card {
-    transition: all 0.3s ease;
-}
-
-.news-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    
+    .news-detail {
+        padding: 2rem 0;
+    }
 }

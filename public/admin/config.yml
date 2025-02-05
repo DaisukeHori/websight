@@ -17,8 +17,24 @@ collections:
     fields:
       - { label: "タイトル", name: "title", widget: "string" }
       - { label: "公開日", name: "date", widget: "datetime", format: "YYYY-MM-DD" }
-      - { label: "サムネイル画像", name: "thumbnail", widget: "image", required: false }
-      - { label: "概要", name: "description", widget: "text" }
-      - { label: "本文", name: "body", widget: "markdown" }
+      - { label: "メイン画像", name: "thumbnail", widget: "image", required: true }
+      - { label: "概要", name: "description", widget: "text", required: true }
+      - { label: "本文", name: "body", widget: "markdown", required: true }
       - { label: "カテゴリー", name: "category", widget: "select", options: ["お知らせ", "プレスリリース", "技術情報", "採用情報"] }
       - { label: "タグ", name: "tags", widget: "list", required: false }
+      - label: "ギャラリー"
+        name: "gallery"
+        widget: "list"
+        required: false
+        fields:
+          - { label: "画像", name: "image", widget: "image" }
+          - { label: "キャプション", name: "caption", widget: "string" }
+      - label: "関連リンク"
+        name: "links"
+        widget: "list"
+        required: false
+        fields:
+          - { label: "タイトル", name: "title", widget: "string" }
+          - { label: "URL", name: "url", widget: "string" }
+      - { label: "著者", name: "author", widget: "string", required: false }
+      - { label: "ハイライト", name: "featured", widget: "boolean", default: false }
