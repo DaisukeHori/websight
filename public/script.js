@@ -29,12 +29,36 @@ async function loadNews() {
     if (!newsContainer) return;
 
     try {
-        // content/newsディレクトリから記事を読み込む
-        const newsFiles = await fetch('/content/news/index.json');
-        const news = await newsFiles.json();
+        // content/news ディレクトリのマークダウンファイル一覧を取得
+        const response = await fetch('/.netlify/git/github/contents/content/news');
+        const files = await response.json();
+        const newsPromises = files
+            .filter(file => file.name.endsWith('.md'))
+            .map(file => fetch(file.download_url).then(res => res.text()));
+
+        const newsTexts = await Promise.all(newsPromises);
+        const news = newsTexts.map(text => {
+            // Front matterのパース
+            const frontMatter = text.split('---')[1];
+            const data = {};
+            frontMatter.split('\n').forEach(line => {
+                const [key, ...value] = line.split(':');
+                if (key && value.length > 0) {
+                    data[key.trim()] = value.join(':').trim();
+                }
+            });
+            // 本文の取得
+            const body = text.split('---')[2];
+            return {
+                ...data,
+                body: body.trim(),
+                date: new Date(data.date),
+                slug: data.title.toLowerCase().replace(/\s+/g, '-')
+            };
+        });
 
         // 日付で降順ソート
-        news.sort((a, b) => new Date(b.date) - new Date(a.date));
+        news.sort((a, b) => b.date - a.date);
 
         // 最新の3件のみ表示
         const recentNews = news.slice(0, 3);
