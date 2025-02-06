@@ -40,8 +40,7 @@
   [headers.values]
     X-Frame-Options = "DENY"
     X-XSS-Protection = "1; mode=block"
-    # Allow blob: and data: in connect-src to fix "Refused to connect to blob:..." errors
-    Content-Security-Policy = "default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://identity.netlify.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://unpkg.com; img-src 'self' data: blob: https:; media-src 'self' data: blob: https:; frame-src https://identity.netlify.com; connect-src 'self' blob: data: https://api.netlify.com https://identity.netlify.com; worker-src 'self' blob:; child-src blob:; form-action 'self'; base-uri 'self';"
+    Content-Security-Policy = "default-src 'self' https:; connect-src 'self' data: blob: https://api.netlify.com https://identity.netlify.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://identity.netlify.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://unpkg.com; img-src 'self' data: blob: https:; media-src 'self' data: blob: https:; frame-src https://identity.netlify.com; worker-src 'self' blob:; child-src blob:; form-action 'self'; base-uri 'self';"
 
 [[headers]]
   for = "/*.css"
